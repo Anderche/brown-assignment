@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('hello world'));
+app.set('view engine', 'ejs');
+
+app.get('/', function(req, res) {
+	res.render('random');
+});
 
 app.listen(3000, () => {
-	console.log('This is an assignment for Brown!');
+	console.log('Running on port 3000!');
 });
