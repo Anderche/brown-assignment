@@ -9,21 +9,37 @@ app.set('view engine', 'ejs');
 // var url = 'https://randomuser.me/api/?results=2';
 var url = 'https://randomuser.me/api/?nat=us,ca&results=2';
 
+var passUsers = [];
+
 app.get('/', function(req, res) {
 	request(url, function(error, response, body) {
-		var random_data = JSON.parse(body);
-		console.log(random_data);
+		var random_data = JSON.parse(body).results;
+		// console.log(random_data);
 
-		var random_user = {
-			gender: random_data.gender,
-			// first_name: random_data.name.first,
-			// last_name: random_data.name.last,
-			country: random_data.nat,
-			// date_of_birth: random_data.dob.date,
-			birthday: ' ',
-		};
+		for (var userIndex = 0; userIndex < random_data.length; userIndex++) {
+			var person = random_data[userIndex];
 
-		console.log('>> This is a single user: ' + random_data.name);
+			random_user = {
+				gender: person.gender,
+				first_name: person.name.first,
+				last_name: person.name.last,
+				country: person.nat,
+				date_of_birth: person.dob.date,
+				birthday: ' ',
+			};
+
+			passUsers.push(random_user);
+
+			console.log('-----------------');
+			console.log(random_user);
+		}
+
+		console.log('>> This is the number of random users: ' + random_data.length);
+		console.log('------');
+		console.log(passUsers);
+
+		console.log('------');
+		console.log(passUsers[0].first_name);
 
 		res.render('random');
 	});
