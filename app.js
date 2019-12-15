@@ -1,64 +1,37 @@
-var dateFormat = require('dateformat');
-
 const express = require('express');
 const request = require('request');
 
 const app = express();
-
 app.set('view engine', 'ejs');
-
-// CHANGE TO 20 RESULTS
-// var url = 'https://randomuser.me/api/?nat=us,ca&results=20';
 var url = 'https://randomuser.me/api/?nat=us,ca&results=2';
-
-var passUsers = [];
-// var currentDate = Date();
-
-var currentDate = new Date().toISOString().split('T', 1);
-var monthDay = dateFormat(currentDate, 'mm-dd');
-console.log('currently it is: ' + monthDay);
-console.log('---- 1 ----');
 
 app.get('/', function(req, res) {
 	request(url, function(error, response, body) {
-		var random_data = JSON.parse(body).results;
-		// console.log(random_data);
+		var random_data = JSON.parse(body);
 
-		for (var userIndex = 0; userIndex < random_data.length; userIndex++) {
-			var person = random_data[userIndex];
+		// push random users into this array variable. ultimately, pass this array to view file.
+		let passUsers = [];
 
-			random_user = {
-				gender: person.gender,
-				first_name: person.name.first,
-				last_name: person.name.last,
-				country: person.nat,
-				date_of_birth: person.dob.date.split('T', 1),
-				birthday: ' ',
-			};
+		var date_now = new Date();
+		var cur_day = parseInt(date_now.toDateString().split(' ')[2]);
+		var cur_month = parseInt(date_now.getMonth()) + 1;
 
-			// push random user object into passUsers array
-			passUsers.push(random_user);
+		for (var i = 0; i < random_data.results.length; i++) {
+			let random_user = {};
 
-			console.log('---- 2 ----');
-			var dob = person.dob.date.split('T', 1);
-			console.log(dob);
-			var formatted_dob = dateFormat(dob, 'UTC:mm-dd');
-			console.log('User D.O.B. is: ' + formatted_dob);
+			random_user.gender = random_data.results[i].gender;
+			random_user.first_name = random_data.results[i].name.first;
+			random_user.last_name = random_data.results[i].name.last;
+			random_user.country = random_data.results[i].location.country;
+			random_user.dob = random_data.results[i].dob.date.split('T')[0];
+			// console.log(random_user.dob);
 
-			// push birthday into passUsers
-			// passUsers.push(bdayText);
+			date_dob = new Date(random_user.dob);
+			dob_day = parseInt(random_user.dob.split('-')[2]);
+			dob_month = parseInt(random_user.dob.split('-')[1]);
 
-			console.log('---- 3 ----');
-
-			if (formatted_dob < monthDay) console.log('Birthday has happened already!');
-			else if (formatted_dob > monthDay) console.log('Birthday has yet to occur!');
-			else console.log('Birthday is today!');
+			// passUsers.push(random_user);
 		}
-
-		console.log('------');
-		console.log(passUsers);
-		console.log('------');
-
 		res.render('random');
 	});
 });
