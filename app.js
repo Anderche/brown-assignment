@@ -3,7 +3,7 @@ const request = require('request');
 
 const app = express();
 app.set('view engine', 'ejs');
-var url = 'https://randomuser.me/api/?nat=us,ca&results=2';
+var url = 'https://randomuser.me/api/?nat=us,ca&results=20';
 
 app.get('/', function(req, res) {
 	request(url, function(error, response, body) {
