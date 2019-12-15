@@ -23,6 +23,18 @@
 					<th>BIRTHDAY</th>
 				</tr>
 			</thead>
+			<tbody>
+				<% for (var i=0; i < passUsers.length; i++) { %>
+				<tr>
+					<td><%= passUsers[i].gender %></td>
+					<td><%= passUsers[i].first_name %></td>
+					<td><%= passUsers[i].last_name %></td>
+					<td><%= passUsers[i].country %></td>
+					<td><%= passUsers[i].dob %></td>
+					<td><%= passUsers[i].birthday %></td>
+				</tr>
+				<% } %>
+			</tbody>
 		</table>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

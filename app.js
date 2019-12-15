@@ -24,7 +24,7 @@ app.get('/', function(req, res) {
 			random_user.last_name = random_data.results[i].name.last;
 			random_user.country = random_data.results[i].location.country;
 			random_user.dob = random_data.results[i].dob.date.split('T')[0];
-			console.log(random_user.dob);
+			// console.log(random_user.dob);
 
 			date_dob = new Date(random_user.dob);
 			dob_day = parseInt(random_user.dob.split('-')[2]);
@@ -38,11 +38,12 @@ app.get('/', function(req, res) {
 				random_user.birthday = 'Birthday is today!';
 			}
 
-			console.log(random_user.birthday);
+			// console.log(random_user.birthday);
 
 			passUsers.push(random_user);
 		}
-		res.render('random');
+		res.render('random', { passUsers: passUsers });
+		console.log('>>> Last passUser first_name: ' + passUsers[19].first_name);
 	});
 });
 
