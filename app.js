@@ -24,13 +24,23 @@ app.get('/', function(req, res) {
 			random_user.last_name = random_data.results[i].name.last;
 			random_user.country = random_data.results[i].location.country;
 			random_user.dob = random_data.results[i].dob.date.split('T')[0];
-			// console.log(random_user.dob);
+			console.log(random_user.dob);
 
 			date_dob = new Date(random_user.dob);
 			dob_day = parseInt(random_user.dob.split('-')[2]);
 			dob_month = parseInt(random_user.dob.split('-')[1]);
 
-			// passUsers.push(random_user);
+			if (dob_month > cur_month || (dob_month == cur_month && dob_day > cur_day)) {
+				random_user.birthday = 'Birthday has yet to occur!';
+			} else if (dob_month < cur_month || (dob_month == cur_month && dob_day < cur_day)) {
+				random_user.birthday = 'Birthday has already happened!';
+			} else if (dob_month == cur_month && dob_day == cur_day) {
+				random_user.birthday = 'Birthday is today!';
+			}
+
+			console.log(random_user.birthday);
+
+			passUsers.push(random_user);
 		}
 		res.render('random');
 	});
