@@ -13,8 +13,21 @@
 
 	<style> 
 	.table, th, td {border: .7px solid black;}
+
+	html,
+	body {
+		height: 100%;
+	}
+
+	.purple-square-container {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 	</style>
 
+	<div class="container main">
 		<div class="random">
 			<h1>20 Randomly Generated Users</h1>
 			<h2>as coded by Anders Kiss</h2>
@@ -50,6 +63,7 @@
 				<% } %>
 			</tbody>
 		</table>
+	</div>
 
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
