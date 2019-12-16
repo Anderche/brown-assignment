@@ -43,7 +43,7 @@ app.get('/', function(req, res) {
 			passUsers.push(random_user);
 		}
 		res.render('random', { passUsers: passUsers });
-		console.log('>>> Last passUser first_name: ' + passUsers[19].first_name);
+		// console.log('>>> Last passUser first_name: ' + passUsers[19].first_name);
 	});
 });
 

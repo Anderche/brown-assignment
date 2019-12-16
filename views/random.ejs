@@ -6,20 +6,45 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Brown Assignment by: Anders Kiss</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="" />
 	</head>
 	<body>
 
 	<style> 
-	.table, th, td {border: .7px solid black;}
+	.table, th, td {border: .3px solid black}
+
+	.description {padding-left: 50px}
+
+	html,
+	body {
+		height: 100%;
+		padding: 45px;
+	}
+
+	h1, h2, h3 {
+		padding: 10px;
+	}
+
 	</style>
 
+	<div class="container">
 		<div class="random">
 			<h1>20 Randomly Generated Users</h1>
-			<h3 style="color:grey">simply refresh the page for another set</h3>
+			<div class="description">
+				<h2 style="color:#424242">as coded by Anders Kiss</h2>
+				<h3>
+				<ol style="color:grey">Instructions
+					<li style="font-size:20px">Click a column header to sort the values</li>
+					<li style="font-size:20px">Refresh the page for another set of 20 users</li>
+				</ol>
+				</h3>
+			</div>
+
+			<h3 style="color:grey"></h3>
 		</div>
-		<table>
-			<thead style="color:blue;font-size:23px;">
+		<table id="myTable" class="table">
+			<thead style="color:#1E52FF;">
 				<tr>
 					<th>GENDER</th>
 					<th>FIRST NAME</th>
@@ -29,7 +54,7 @@
 					<th>BIRTHDAY</th>
 				</tr>
 			</thead>
-			<tbody>
+        	<tbody id="random-users">
 				<% for (var i=0; i < passUsers.length; i++) { %>
 				<tr>
 					<td><%= passUsers[i].gender %></td>
@@ -42,7 +67,62 @@
 				<% } %>
 			</tbody>
 		</table>
+	</div>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
+		<script type="text/javascript">
+			th = document.getElementsByTagName('th');
+
+			for (let c = 0; c < th.length; c++) {
+				th[c].addEventListener('click', item(c));
+			}
+
+			function item(c) {
+				return function() {
+					// console.log(c);
+					sortTable(c);
+				};
+			}
+
+			function sortTable(c) {
+				var table, rows, switching, i, x, y, shouldSwitch;
+				table = document.getElementById('myTable');
+				switching = true;
+				/* Make a loop that will continue until
+				no switching has been done: */
+				while (switching) {
+					// Start by saying: no switching is done:
+					switching = false;
+					rows = table.rows;
+					/* Loop through all table rows (except the
+				first, which contains table headers): */
+					for (i = 1; i < rows.length - 1; i++) {
+						// Start by saying there should be no switching:
+						shouldSwitch = false;
+						/* Get the two elements you want to compare,
+					one from current row and one from the next: */
+						x = rows[i].getElementsByTagName('TD')[c];
+						y = rows[i + 1].getElementsByTagName('TD')[c];
+						// Check if the two rows should switch place:
+						if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+							// If so, mark as a switch and break the loop:
+							shouldSwitch = true;
+							break;
+						}
+					}
+					if (shouldSwitch) {
+						/* If a switch has been marked, make the switch
+					and mark that a switch has been done: */
+						rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+						switching = true;
+					}
+				}
+			}
+		</script>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	</body>
 </html>
