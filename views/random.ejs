@@ -29,7 +29,7 @@
 					<th>BIRTHDAY</th>
 				</tr>
 			</thead>
-			<tbody>
+        	<tbody id="random-users">
 				<% for (var i=0; i < passUsers.length; i++) { %>
 				<tr>
 					<td><%= passUsers[i].gender %></td>
@@ -44,5 +44,20 @@
 		</table>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		
+		<script type="text/javascript">
+			th = document.getElementsByTagName('th')
+
+			for (let c=0; c < th.length; c++) {
+				th[c].addEventListener('click', item(c))
+			}
+
+			function item(c) {
+				return function(){
+					console.log(c);
+				}
+			}
+ 		</script>
+
 	</body>
 </html>
