@@ -16,10 +16,17 @@
 
 		<div class="random">
 			<h1>20 Randomly Generated Users</h1>
-			<h3 style="color:grey">simply refresh the page for another set</h3>
+			<h2>by Anders Kiss</h2>
+			<h3>
+			<ol style="color:grey">Instructions
+				<li style="font-size:20px">Click a column header to sort the values</li>
+				<li style="font-size:20px">Simply refresh the page for another set of 20 users</li>
+			</ol>
+			</h3>
+			<h3 style="color:grey"></h3>
 		</div>
-		<table>
-			<thead style="color:blue;font-size:23px;">
+		<table id="myTable" class="table">
+			<thead style="color:blue;">
 				<tr>
 					<th>GENDER</th>
 					<th>FIRST NAME</th>
@@ -44,20 +51,58 @@
 		</table>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		
-		<script type="text/javascript">
-			th = document.getElementsByTagName('th')
 
-			for (let c=0; c < th.length; c++) {
-				th[c].addEventListener('click', item(c))
+		<script type="text/javascript">
+
+			th = document.getElementsByTagName('th');
+
+			for (let c = 0; c < th.length; c++) {
+				th[c].addEventListener('click', item(c));
 			}
 
 			function item(c) {
-				return function(){
-					console.log(c);
+				return function() {
+					// console.log(c);
+					sortTable(c);
+				};
+			}
+
+			function sortTable(c) {
+				var table, rows, switching, i, x, y, shouldSwitch;
+				table = document.getElementById('myTable');
+				switching = true;
+				/* Make a loop that will continue until
+				no switching has been done: */
+				while (switching) {
+					// Start by saying: no switching is done:
+					switching = false;
+					rows = table.rows;
+					/* Loop through all table rows (except the
+				first, which contains table headers): */
+					for (i = 1; i < rows.length - 1; i++) {
+						// Start by saying there should be no switching:
+						shouldSwitch = false;
+						/* Get the two elements you want to compare,
+					one from current row and one from the next: */
+						x = rows[i].getElementsByTagName('TD')[c];
+						y = rows[i + 1].getElementsByTagName('TD')[c];
+						// Check if the two rows should switch place:
+						if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+							// If so, mark as a switch and break the loop:
+							shouldSwitch = true;
+							break;
+						}
+					}
+					if (shouldSwitch) {
+						/* If a switch has been marked, make the switch
+					and mark that a switch has been done: */
+						rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+						switching = true;
+					}
 				}
 			}
- 		</script>
+
+		</script>
 
 	</body>
 </html>
